@@ -1,0 +1,590 @@
+{
+	"info": {
+		"_postman_id": "85c8d7a2-4762-4ccc-9afe-b0711a433754",
+		"name": "agentBackend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25659122"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\":\"rinkusingh@gmail.com\",\r\n  \"password\":\"rinkusingh2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"firstName\":\"rinku\",\r\n  \"lastName\":\"singh\",\r\n  \"mobile_no\":8612345678,\r\n  \"email\": \"rinkusingh@gmail.com\",\r\n  \"password\": \"rinkusingh\",\r\n  \"confirmPassword\": \"rinkusingh\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetQuery",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTg1MjRmZjliMDEwYjBiZjdiMzA1Y2MiLCJpYXQiOjE3MDMyMzc1NTV9.RvOmiAordA57QnHA-dtvQhScX1-0iuW_YuyvPQtKeEk",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/user_query",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"user_query"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetProfile",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTg1MjRmZjliMDEwYjBiZjdiMzA1Y2MiLCJpYXQiOjE3MDMyMzc1NTV9.RvOmiAordA57QnHA-dtvQhScX1-0iuW_YuyvPQtKeEk",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:9000/api/profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EditProfile",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTg1MjRmZjliMDEwYjBiZjdiMzA1Y2MiLCJpYXQiOjE3MDMyMzc1NTV9.RvOmiAordA57QnHA-dtvQhScX1-0iuW_YuyvPQtKeEk",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"lastName\":\"Singhaniya\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/profile/edit",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"profile",
+						"edit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdatePassword",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTk1NDFiZTAzMzNkYmYzNGZhZmRjZjQiLCJpYXQiOjE3MDQzNDg2NDB9.Bbv7SncsiR1-k0AwHI6A1rpZpx_exsYJpUhpsb31Hgw",
+						"type": "text"
+					},
+					{
+						"key": "authorization2",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OTU0MWJlMDMzM2RiZjM0ZmFmZGNmNCIsImVtYWlsIjoicmlua3VzaW5naEBnbWFpbC5jb20iLCJ0eXBlIjoiZm9yZ290X3Bhc3N3b3JkIiwiaWF0IjoxNzA0Mjg2NjU4fQ.FIirxQOkJaLIht6wR-LugTs5LbLUacbyS5U9tm9_ngM",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"password\":\"rinkusingh5\",\r\n    \"confirmpassword\":\"rinkusingh5\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/auth/updatepassword",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"auth",
+						"updatepassword"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UploadFile",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTg1MjRmZjliMDEwYjBiZjdiMzA1Y2MiLCJpYXQiOjE3MDMyMjQ1NzV9.9W9xtvrsthEmdMzzOle9T1giAxmH8iqN8XAZf9hnRy0",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "files",
+							"type": "file",
+							"src": "/C:/Users/Pr7/Desktop/samplefile.txt"
+						},
+						{
+							"key": "chats",
+							"value": "hii",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/user_query/uploadFile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"user_query",
+						"uploadFile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RetrainModel",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTg2NjY0OGVmMDg0MThhODk4MTc3OGUiLCJpYXQiOjE3MDMzMDczOTZ9.TRbMHPNxoT11iWmJ_BCFHysRpbage7H7GylIE0xgqmU",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":\"1\",\r\n\"path\":\"uploads\\\\1703225190811-samplefile.txt\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/user_query/retrainModel",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"user_query",
+						"retrainModel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Chat",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTg2NjY0OGVmMDg0MThhODk4MTc3OGUiLCJpYXQiOjE3MDMzMDczOTZ9.TRbMHPNxoT11iWmJ_BCFHysRpbage7H7GylIE0xgqmU",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "// {\"question\":\"when did high school over?\",\"isNew\":true,\"title\":\"high school\"} \r\n{\"id\":1,\"question\":\"what is jthe name of author?\"} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/user_query/chat",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"user_query",
+						"chat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllFiles",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTg1MjRmZjliMDEwYjBiZjdiMzA1Y2MiLCJpYXQiOjE3MDMyMzgzNjJ9.ooTtMGN46yyl9YjUsoZSZ5vzfrZnj7x1StL-leZhOuc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:9000/api/user_query/getAllFiles",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"user_query",
+						"getAllFiles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetSingleFile",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTg1MjRmZjliMDEwYjBiZjdiMzA1Y2MiLCJpYXQiOjE3MDMyMzgzNjJ9.ooTtMGN46yyl9YjUsoZSZ5vzfrZnj7x1StL-leZhOuc",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":\"2\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/user_query/getSingleFile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"user_query",
+						"getSingleFile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddNewPrompt",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTg0MmEyOGNhOTFhOWMwZTc5NjYxYmQiLCJpYXQiOjE3MDMxNjAzOTB9._FAnOFimnygDh8TuHy3VXBjmSFhbjXtI-9eV3Px1A4I",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"title\":\"Sales\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/prompt",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"prompt"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5000/validuser",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTg3Y2YyM2VmYWNkODMwMTA4ZGE3MmEiLCJpYXQiOjE3MDM0MDAxNjgsImV4cCI6MTcwMzQ4NjU2OH0.ZvjTzpi51fKlu3OCiUN9QgxtY0MYj-bXrkxe7H8YUHE",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/validuser",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"validuser"
+					],
+					"query": [
+						{
+							"key": "autho",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTg3Y2YyM2VmYWNkODMwMTA4ZGE3MmEiLCJpYXQiOjE3MDM0MDAxNjgsImV4cCI6MTcwMzQ4NjU2OH0.ZvjTzpi51fKlu3OCiUN9QgxtY0MYj-bXrkxe7H8YUHE",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "setLlmTemp",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTk1MTEzNjM0MThlNjUwN2U2MjIzYjgiLCJpYXQiOjE3MDQyNjgwODZ9.i3d6UJh1ZEZ9WuUDubGjAlhr9OjGaQRDhrT_cQdWfSI",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"llmTemp\":\"6\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/user_query/setllmTemp",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"user_query",
+						"setllmTemp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "forgotpassword",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTk1NDFiZTAzMzNkYmYzNGZhZmRjZjQiLCJpYXQiOjE3MDQyODA1MTB9.pOIQgiGKdB-NDMwMnADsh1CFyuHSwSND6iScicayuUw",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"rinkusingh@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/auth/forgotpassword",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"auth",
+						"forgotpassword"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "setLlmkey",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTk1NDFiZTAzMzNkYmYzNGZhZmRjZjQiLCJpYXQiOjE3MDQyODA1MTB9.pOIQgiGKdB-NDMwMnADsh1CFyuHSwSND6iScicayuUw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"llmKey\":\"150\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/user_query/setLlmKey",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"user_query",
+						"setLlmKey"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
