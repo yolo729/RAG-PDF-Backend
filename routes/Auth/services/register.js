@@ -38,31 +38,6 @@ const Register = async (req, res) => {
         mobile_no,
         password,
       });
-      //mail sending
-      const mailgun = new Mailgun(formData);
-      const mg = mailgun.client({
-        username: "api",
-        key: process.env.MAILGUN_API_KEY || "",
-      });
-      const e_token = CryptoJS.AES.encrypt(email, process.env.CRYPTO_KEY)
-        .toString()
-        .replaceAll("+", "xMl3Jk")
-        .replaceAll("/", "Por21Ld")
-        .replaceAll("=", "Ml32");
-      const p_token = CryptoJS.AES.encrypt(password, process.env.CRYPTO_KEY)
-        .toString()
-        .replaceAll("+", "xMl3Jk")
-        .replaceAll("/", "Por21Ld")
-        .replaceAll("=", "Ml32");
-      const registrationURL = `${process.env.MY_DOMAIN}/signup?etoken=${e_token}&ptoken=${p_token}`;
-      const messageData = {
-        from: `IYKYK team <noreply@${process.env.MAILGUN_DOMAIN}> `,
-        to: email,
-        subject: `Please verify your email`,
-        text: `Click on the following link to complete your registration: ${registrationURL}`,
-      };
-
-      await mg.messages.create(process.env.MAILGUN_DOMAIN, messageData);
       // Password Hashing
       const token = jwt.sign({ _id: finalUser._id }, process.env.JWT_SECRET);
       const storeData = await finalUser.save();

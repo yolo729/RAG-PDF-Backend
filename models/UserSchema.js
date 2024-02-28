@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema({
 
   is_EV: {
     type: Boolean,
-    default: false,
+    default: true,
   },
 });
 
