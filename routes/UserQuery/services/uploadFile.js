@@ -7,7 +7,6 @@ const UserSchema = require("../../../models/UserSchema");
 const { activePrompt } = require("../../../prompts");
 const { serverInfo } = require("./chat");
 const router = express.Router();
-const { BlockBlobClient } = require("@azure/storage-blob");
 
 const ENV = process.env.ENV;
 
@@ -22,48 +21,17 @@ const upload = multer({
       callback(null, Date.now() + "-" + file.originalname);
     },
   }),
-}).single("file");
-
-const getBlobName = async (originalName, token_id) => {
-  const user = await UserSchema.findOne({ _id: token_id });
-  const identifier = Math.random().toString().replace(/0\./, ""); // remove "0." from start of string
-  return user
-    ? `${user.email}-${originalName}`
-    : `${identifier}-${originalName}`;
-};
+}).array("files");
 
 const UploadFile = router.post(
   "/uploadFile",
   validateToken,
   upload,
   async (req, res) => {
-    const { filename, path } = req.file;
+    console.log("reqfiles=----------------", req.files);
+    const files = req.files;
     try {
-      if (ENV === "prod") {
-        const blobName = await getBlobName(filename, req.token._id);
-        const blobService = new BlockBlobClient(
-          process.env.AZURE_STORAGE_CONNECTION_STRING,
-          process.env.AZURE_CONTAINER_NAME,
-          blobName
-        );
-
-        blobService
-          .uploadFile(path)
-          .then(() => {
-            // fs.unlinkSync(path);
-            console.log("------file upload success");
-          })
-          .catch((err) => {
-            if (err) {
-              console.log("------file upload error", err);
-              return;
-            }
-          });
-      }
       let userQuery = await Userquery.findOne({ user_id: req.token._id });
-
-      console.log("userquery------------", userQuery);
-
       if (userQuery) {
         let activePromptFiles = userQuery?.files
           ? userQuery.files[activePrompt]
@@ -72,20 +40,22 @@ const UploadFile = router.post(
         const lastFileId = activePromptFiles.length
           ? activePromptFiles[activePromptFiles.length - 1].id + 1
           : 1;
-        const prevFiles = userQuery?.files || [];
-        userQuery.files = {
-          ...prevFiles,
-          [activePrompt]: [
-            ...activePromptFiles,
-            { id: lastFileId, title: filename, path },
-          ],
-        };
+        // const prevFiles = userQuery?.files || [];
+        const result = files.map((file, i) => {
+          userQuery.files[activePrompt].push({
+            id: lastFileId + i,
+            title: file.filename,
+            path: file.path,
+          });
+        });
       } else {
-        userQuery = {
-          files: {
-            [activePrompt]: [{ id: 1, title: filename, path }],
-          },
-        };
+        const result = files.map((file, i) => {
+          userQuery.files[activePrompt].push({
+            id: i,
+            title: file.filename,
+            path: file.path,
+          });
+        });
       }
       const newUserQuery = new Userquery(userQuery);
       const result = await newUserQuery.save();
