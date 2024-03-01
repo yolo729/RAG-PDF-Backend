@@ -3,9 +3,10 @@ const Prompt = require("../../../models/Prompt");
 const GPT = require("../../../models/UserGPT");
 const OpenAIApi = require("openai");
 const { activePrompt, allPrompts } = require("../../../prompts");
+const { initVectorIndex } = require("./utils");
 const e = require("cors");
 
-let indexStore = [];
+let indexStore = null;
 let serverInfo = { restarted: true };
 let solution = null;
 // const newConfig = new Configuration({
@@ -24,27 +25,14 @@ const Chat = async (req, res) => {
   if (isNew && !title) {
     return res.status(400).json({ error: "Please provide chat title" });
   }
+  indexStore = await initVectorIndex(req.token._id);
 
-  const userIndex = indexStore.find((item) => item.user == req.token._id);
-
-  if (!userIndex) {
+  if (!indexStore) {
     solution = await directGptQuery(question, req.token._id);
-    // return res.status(400).send('No retrained model found, please retrain first to continue with your queries')
   } else {
-    // Query the index
-    userIndex.indexes[activePrompt] = userIndex.indexes[activePrompt] || [];
-    const indexObj = userIndex.indexes[activePrompt].find(
-      (index) => index.modelId == modelId
-    );
-    if (!indexObj) {
-      solution = await directGptQuery(question, req.token._id);
-      // return res.status(400).send('No retrained model found with provided file id')
-    }
-    if (!solution) {
-      const queryEngine = indexObj.index.asQueryEngine();
-      const response = await queryEngine.query(question);
-      solution = response.toString();
-    }
+    const queryEngine = indexStore.asQueryEngine();
+    const response = await queryEngine.query(question);
+    solution = response.toString();
   }
 
   try {

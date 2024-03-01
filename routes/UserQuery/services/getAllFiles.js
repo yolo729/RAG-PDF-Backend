@@ -17,27 +17,7 @@ const GetAllFiles = async (req, res) => {
       : [];
     activePromptFiles = !activePromptFiles ? [] : activePromptFiles;
 
-    if (activePromptFiles.length && !!serverInfo.restarted) {
-      fs.rmSync("./uploads/" + req.token._id, { recursive: true, force: true });
-      userQuery.files[activePrompt] = [];
-      userQuery.activeModel = "gpt-4-0125-preview";
-      const newQuery = new Userquery(userQuery);
-      await newQuery.save();
-      return res.status(200).json({ models: [], files: [] });
-    }
-
-    const isPresent = indexStore.find((index) => index.user == req.token._id);
-    console.log("ispresent---------", isPresent);
-    indexes = [];
-    if (isPresent) {
-      isPresent.indexes[activePrompt] = isPresent.indexes[activePrompt] || [];
-      indexes = isPresent.indexes[activePrompt];
-    } else {
-      console.log("else conditions");
-    }
-
-    const models = indexes.map((index) => index.modelId);
-    res.status(200).json({ models, files: activePromptFiles });
+    res.status(200).json({ files: activePromptFiles });
   } catch (error) {
     res.status(401).json(error.message);
   }

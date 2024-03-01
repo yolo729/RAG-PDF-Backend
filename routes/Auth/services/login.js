@@ -1,6 +1,7 @@
 const User = require("../../../models/UserSchema");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const Userquery = require("../../../models/UserQuery");
 const Prompt = require("../../../models/Prompt");
 const { allPrompts, activePrompt } = require("../../../prompts");
 
@@ -23,6 +24,24 @@ const Login = async (req, res) => {
           const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
           const { _id, firstName, lastName, email, mobile_no } = user;
           const result = { _id, firstName, lastName, email, mobile_no, token };
+
+          const userQuery = await Userquery.findOne({ user_id: user._id });
+          if (userQuery === null) {
+            const userQueryData = new Userquery({
+              user_id: user._id,
+            });
+            await userQueryData.save();
+          }
+
+          // const newPrompt = allPrompts.find(
+          //   (prompt) => prompt.title == activePrompt
+          // );
+          // const promptData = new Prompt({
+          //   ...newPrompt,
+          // });
+
+          // await promptData.save();
+
           res.msg = "Login Successfully";
           res.status(200).json(result);
         } else {

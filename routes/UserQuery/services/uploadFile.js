@@ -28,10 +28,10 @@ const UploadFile = router.post(
   validateToken,
   upload,
   async (req, res) => {
-    console.log("reqfiles=----------------", req.files);
     const files = req.files;
     try {
-      let userQuery = await Userquery.findOne({ user_id: req.token._id });
+      const userQuery = await Userquery.findOne({ user_id: req.token._id });
+
       if (userQuery) {
         let activePromptFiles = userQuery?.files
           ? userQuery.files[activePrompt]
@@ -40,23 +40,42 @@ const UploadFile = router.post(
         const lastFileId = activePromptFiles.length
           ? activePromptFiles[activePromptFiles.length - 1].id + 1
           : 1;
-        // const prevFiles = userQuery?.files || [];
-        const result = files.map((file, i) => {
-          userQuery.files[activePrompt].push({
-            id: lastFileId + i,
-            title: file.filename,
-            path: file.path,
+
+        if (!userQuery.files) {
+          const fileArray = [];
+          files.map((file, i) => {
+            fileArray.push({
+              id: i + 1,
+              title: file.filename,
+              path: file.path,
+            });
           });
-        });
+          userQuery.files = {
+            ...userQuery.files,
+            [activePrompt]: fileArray,
+          };
+        } else {
+          const result = files.map((file, i) => {
+            userQuery.files[activePrompt].push({
+              id: lastFileId + i,
+              title: file.filename,
+              path: file.path,
+            });
+          });
+        }
       } else {
-        const result = files.map((file, i) => {
-          userQuery.files[activePrompt].push({
-            id: i,
-            title: file.filename,
-            path: file.path,
-          });
+        const fileArray = [];
+        files.map((file, i) => {
+          fileArray.push({ id: i + 1, title: file.filename, path: file.path });
         });
+
+        userQuery = {
+          files: {
+            [activePrompt]: fileArray,
+          },
+        };
       }
+
       const newUserQuery = new Userquery(userQuery);
       const result = await newUserQuery.save();
       serverInfo.restarted = false;
