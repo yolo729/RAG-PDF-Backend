@@ -2,7 +2,9 @@ const User = require("../../../models/UserSchema");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Userquery = require("../../../models/UserQuery");
+const { initVectorIndex } = require("../../UserQuery/services/utils");
 const Prompt = require("../../../models/Prompt");
+
 const { allPrompts, activePrompt } = require("../../../prompts");
 
 const Login = async (req, res) => {
@@ -42,6 +44,7 @@ const Login = async (req, res) => {
 
           // await promptData.save();
 
+          await initVectorIndex(user._id);
           res.msg = "Login Successfully";
           res.status(200).json(result);
         } else {

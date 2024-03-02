@@ -5,7 +5,8 @@ const validateToken = require("../../../middleware/tokenauthenticate");
 const Userquery = require("../../../models/UserQuery");
 const UserSchema = require("../../../models/UserSchema");
 const { activePrompt } = require("../../../prompts");
-const { serverInfo } = require("./chat");
+const { serverInfo, indexStore } = require("./chat");
+const { initVectorIndex } = require("./utils");
 const router = express.Router();
 
 const ENV = process.env.ENV;
@@ -79,6 +80,7 @@ const UploadFile = router.post(
       const newUserQuery = new Userquery(userQuery);
       const result = await newUserQuery.save();
       serverInfo.restarted = false;
+      await initVectorIndex(req.token._id);
       res.status(200).json(result.files);
     } catch (error) {
       res.status(401).json(error.message);

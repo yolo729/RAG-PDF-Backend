@@ -1,6 +1,6 @@
 const Userquery = require("../../../models/UserQuery");
 const { activePrompt } = require("../../../prompts");
-const { indexStore } = require("./chat");
+const { initVectorIndex } = require("./utils");
 const fs = require("fs");
 const DeleteModel = async (req, res) => {
   const { id, path } = req.body;
@@ -54,6 +54,10 @@ const DeleteModel = async (req, res) => {
     // }
     const newUserQuery = new Userquery(userQuery);
     const result = await newUserQuery.save();
+
+    // console.log("Reinitializing vector db...");
+    await initVectorIndex(req.token._id);
+    // console.log("finish vector db !");
     res.status(200).send("Deleted successfully");
   } catch (error) {
     res.status(401).json(error.message);

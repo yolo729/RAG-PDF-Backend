@@ -3,10 +3,9 @@ const Prompt = require("../../../models/Prompt");
 const GPT = require("../../../models/UserGPT");
 const OpenAIApi = require("openai");
 const { activePrompt, allPrompts } = require("../../../prompts");
-const { initVectorIndex } = require("./utils");
+const { initVectorIndex, indexStore } = require("./utils");
 const e = require("cors");
 
-let indexStore = null;
 let serverInfo = { restarted: true };
 let solution = null;
 // const newConfig = new Configuration({
@@ -25,7 +24,9 @@ const Chat = async (req, res) => {
   if (isNew && !title) {
     return res.status(400).json({ error: "Please provide chat title" });
   }
-  indexStore = await initVectorIndex(req.token._id);
+
+  // indexStore = await initVectorIndex(user._id);
+  // console.log("Finish init VectorDB *** ");
 
   if (!indexStore) {
     solution = await directGptQuery(question, req.token._id);
