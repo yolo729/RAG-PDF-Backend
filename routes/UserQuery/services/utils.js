@@ -3,21 +3,7 @@ const fs = require("fs");
 
 const indexStore = Object.create(VectorStoreIndex.prototype);
 
-const deepClone = (obj) => {
-  if (typeof obj !== "object" || obj === null) {
-    return obj;
-  }
-
-  const cloned = Array.isArray(obj) ? [] : {};
-
-  for (let key in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) {
-      cloned[key] = deepClone(obj[key]);
-    }
-  }
-
-  return cloned;
-};
+const isExistFiles = { value: false };
 
 const initVectorIndex = async (userid) => {
   const path = "./uploads/" + userid;
@@ -26,13 +12,21 @@ const initVectorIndex = async (userid) => {
     const data = await readDir.loadData({
       directoryPath: "./uploads/" + userid,
     });
-    const index = await VectorStoreIndex.fromDocuments(data);
-
-    Object.assign(indexStore, index);
-    return index;
+    if (data.length > 0) {
+      Object.assign(isExistFiles, { value: true });
+      console.log("isExistFiles---0----", isExistFiles.value);
+      const index = await VectorStoreIndex.fromDocuments(data);
+      Object.assign(indexStore, index);
+      return index;
+    } else {
+      Object.assign(isExistFiles, { value: false });
+      console.log("isExistFiles---1----", isExistFiles.value);
+    }
   } else {
+    Object.assign(isExistFiles, { value: false });
+    console.log("isExistFiles---w----", isExistFiles.value);
     return null;
   }
 };
 
-module.exports = { initVectorIndex, indexStore };
+module.exports = { initVectorIndex, indexStore, isExistFiles };
