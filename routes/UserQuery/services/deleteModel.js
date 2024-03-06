@@ -56,7 +56,7 @@ const DeleteModel = async (req, res) => {
     const result = await newUserQuery.save();
 
     // console.log("Reinitializing vector db...");
-    await initVectorIndex(req.token._id);
+    // await initVectorIndex(req.token._id);
     // console.log("finish vector db !");
     res.status(200).send("Deleted successfully");
   } catch (error) {
