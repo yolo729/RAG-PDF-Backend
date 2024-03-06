@@ -27,19 +27,18 @@ const Chat = async (req, res) => {
 
   // indexStore = await initVectorIndex(user._id);
 
-  if (!isExistFiles.value) {
-    solution = await directGptQuery(question, req.token._id);
-  } else {
-    const queryEngine = indexStore.asQueryEngine();
-    const response = await queryEngine.query(question);
-    console.log("Finish init VectorDB *** ", response);
-    solution = response.toString();
-    if (solution === "Empty Response") {
-      solution = await directGptQuery(question, req.token._id);
-    }
-  }
-
   try {
+    if (!isExistFiles.value) {
+      solution = await directGptQuery(question, req.token._id);
+    } else {
+      const queryEngine = indexStore.asQueryEngine();
+      const response = await queryEngine.query(question);
+      solution = response.toString();
+      if (solution === "Empty Response") {
+        solution = await directGptQuery(question, req.token._id);
+      }
+    }
+
     const userQuery = await Userquery.findOne({ user_id: req.token._id });
 
     let activePromptChats = userQuery.chats

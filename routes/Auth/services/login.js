@@ -44,7 +44,7 @@ const Login = async (req, res) => {
 
           // await promptData.save();
 
-          await initVectorIndex(user._id);
+          // await initVectorIndex(user._id);
           res.msg = "Login Successfully";
           res.status(200).json(result);
         } else {
