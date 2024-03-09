@@ -3,7 +3,7 @@ const Prompt = require("../../../models/Prompt");
 const GPT = require("../../../models/UserGPT");
 const OpenAIApi = require("openai");
 const { activePrompt, allPrompts } = require("../../../prompts");
-const { initVectorIndex, indexStore, isExistFiles } = require("./utils");
+const { indexStore } = require("./retrainAllModels");
 const e = require("cors");
 
 let serverInfo = { restarted: true };
@@ -28,11 +28,11 @@ const Chat = async (req, res) => {
   // indexStore = await initVectorIndex(user._id);
 
   try {
-    if (!isExistFiles.value) {
+    if (indexStore.index === null) {
       solution = await directGptQuery(question, req.token._id);
     } else {
-      const queryEngine = indexStore.asQueryEngine();
-      const response = await queryEngine.query(question);
+      const queryEngine = indexStore.index.asQueryEngine();
+      const response = await queryEngine.query({ query: question });
       solution = response.toString();
       if (solution === "Empty Response") {
         solution = await directGptQuery(question, req.token._id);

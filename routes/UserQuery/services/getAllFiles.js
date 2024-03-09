@@ -1,23 +1,18 @@
-const Userquery = require("../../../models/UserQuery");
-const { activePrompt } = require("../../../prompts");
-const { indexStore, serverInfo } = require("./chat");
 const fs = require("fs");
-
+const path = require("path");
 const GetAllFiles = async (req, res) => {
   try {
-    const userQuery = await Userquery.findOne({
-      user_id: req.token._id,
-    }).populate("user_id");
-
-    if (!userQuery) {
-      return res.status(400).send("no record found with provided id");
-    }
-    let activePromptFiles = userQuery.files
-      ? userQuery.files[activePrompt]
-      : [];
-    activePromptFiles = !activePromptFiles ? [] : activePromptFiles;
-
-    res.status(200).json({ files: activePromptFiles });
+    const directoryPath = "./uploads/";
+    const isFile = (fileName) => {
+      return fs.lstatSync(fileName).isFile();
+    };
+    const files = fs
+      .readdirSync(directoryPath)
+      .map((fileName) => {
+        return path.join(directoryPath, fileName);
+      })
+      .filter(isFile);
+    res.status(200).json({ files });
   } catch (error) {
     res.status(401).json(error.message);
   }
