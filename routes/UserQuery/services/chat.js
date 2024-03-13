@@ -5,6 +5,7 @@ const OpenAIApi = require("openai");
 const { activePrompt, allPrompts } = require("../../../prompts");
 const { indexStore } = require("./retrainAllModels");
 const e = require("cors");
+const { SimpleVectorStore } = require("llamaindex");
 
 let serverInfo = { restarted: true };
 let solution = null;
@@ -26,7 +27,11 @@ const Chat = async (req, res) => {
   }
 
   // indexStore = await initVectorIndex(user._id);
+  // const loadedVectorStore = await SimpleVectorStore.load(
+  //   "indexStore/index.json"
+  // );
 
+  // console.log("store-----------", loadedVectorStore);
   try {
     if (indexStore.index === null) {
       solution = await directGptQuery(question, req.token._id);
