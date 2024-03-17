@@ -26,12 +26,6 @@ const Chat = async (req, res) => {
     return res.status(400).json({ error: "Please provide chat title" });
   }
 
-  // indexStore = await initVectorIndex(user._id);
-  // const loadedVectorStore = await SimpleVectorStore.load(
-  //   "indexStore/index.json"
-  // );
-
-  // console.log("store-----------", loadedVectorStore);
   try {
     if (indexStore.index === null) {
       solution = await directGptQuery(question, req.token._id);
